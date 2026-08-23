@@ -406,8 +406,25 @@ function bcms_seed_pattern( string $slug ): string {
 $pages = array(
 	'home'     => array(
 		'title'    => 'Home',
-		'content'  => '',
 		'template' => '',
+		// Expanded into real blocks rather than left to the template, so the
+		// homepage is editable under Pages → Home like every other page.
+		'content'  => implode(
+			"\n\n",
+			array_filter(
+				array_map(
+					'bcms_seed_pattern',
+					array(
+						'meridian/hero',
+						'meridian/logo-wall',
+						'meridian/selected-work',
+						'meridian/capabilities',
+						'meridian/proof',
+						'meridian/cta',
+					)
+				)
+			)
+		),
 	),
 	'about'    => array(
 		'title'    => 'About',

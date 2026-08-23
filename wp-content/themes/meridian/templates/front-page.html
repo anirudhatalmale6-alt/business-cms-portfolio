@@ -1,14 +1,14 @@
 <!-- wp:template-part {"slug":"header","tagName":"div","area":"header"} /-->
 
-<!-- wp:group {"tagName":"main","metadata":{"name":"Main"},"layout":{"type":"constrained"}} -->
+<!-- wp:group {"tagName":"main","metadata":{"name":"Main"},"layout":{"type":"default"}} -->
 <main class="wp-block-group" id="main">
 
-	<!-- wp:pattern {"slug":"meridian/hero"} /-->
-	<!-- wp:pattern {"slug":"meridian/logo-wall"} /-->
-	<!-- wp:pattern {"slug":"meridian/selected-work"} /-->
-	<!-- wp:pattern {"slug":"meridian/capabilities"} /-->
-	<!-- wp:pattern {"slug":"meridian/proof"} /-->
-	<!-- wp:pattern {"slug":"meridian/cta"} /-->
+	<!-- The homepage sections live in the Home page itself, not in this
+	     template, so the whole front page is editable under Pages -> Home
+	     like any other page. The wrapper deliberately uses the default layout:
+	     a second constrained layer would apply the root padding twice and
+	     stop full-width bands from bleeding to the edges. -->
+	<!-- wp:post-content {"layout":{"type":"constrained","wideSize":"78rem"}} /-->
 
 </main>
 <!-- /wp:group -->
