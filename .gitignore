@@ -1,0 +1,11 @@
+# Local development only — never committed
+site/
+export/
+repo/
+*.log
+mail-log.txt
+webhook-received.log
+server.pid
+wp-config.php
+node_modules/
+.DS_Store

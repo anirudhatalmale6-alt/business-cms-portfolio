@@ -1,0 +1,59 @@
+<!-- wp:template-part {"slug":"header","tagName":"div","area":"header"} /-->
+
+<!-- wp:group {"tagName":"main","metadata":{"name":"Main"},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" id="main">
+
+	<!-- wp:group {"layout":{"type":"constrained"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|40"}}}} -->
+	<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--40)">
+
+		<!-- wp:post-terms {"term":"bcms_industry","className":"meridian-eyebrow","style":{"typography":{"fontSize":"0.6875rem","letterSpacing":"0.14em","textTransform":"uppercase","fontWeight":"600"}}} /-->
+
+		<!-- wp:post-title {"level":1,"style":{"typography":{"fontSize":"clamp(2.25rem, 5vw, 3.5rem)"},"spacing":{"margin":{"top":"var:preset|spacing|20","bottom":"var:preset|spacing|30"}}}} /-->
+
+		<!-- wp:post-excerpt {"excerptLength":40,"className":"meridian-lede","textColor":"slate"} /-->
+
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:post-featured-image {"align":"wide","aspectRatio":"16/9","style":{"border":{"radius":"3px"},"spacing":{"margin":{"bottom":"var:preset|spacing|50"}}}} /-->
+
+	<!-- wp:group {"align":"wide","layout":{"type":"constrained","wideSize":"78rem"},"style":{"spacing":{"padding":{"bottom":"var:preset|spacing|60"}}}} -->
+	<div class="wp-block-group alignwide" style="padding-bottom:var(--wp--preset--spacing--60)">
+
+		<!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|60"}}}} -->
+		<div class="wp-block-columns alignwide">
+
+			<!-- wp:column {"width":"28%"} -->
+			<div class="wp-block-column" style="flex-basis:28%">
+				<!-- wp:bcms/project-facts /-->
+			</div>
+			<!-- /wp:column -->
+
+			<!-- wp:column -->
+			<div class="wp-block-column">
+				<!-- wp:post-content {"className":"meridian-case-body","layout":{"type":"constrained","contentSize":"44rem"}} /-->
+			</div>
+			<!-- /wp:column -->
+
+		</div>
+		<!-- /wp:columns -->
+
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:group {"align":"full","backgroundColor":"mist","layout":{"type":"constrained","wideSize":"78rem"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}}} -->
+	<div class="wp-block-group alignfull has-mist-background-color has-background" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)">
+
+		<!-- wp:heading {"level":2,"style":{"typography":{"fontSize":"1.5rem"},"spacing":{"margin":{"bottom":"var:preset|spacing|40"}}}} -->
+		<h2 class="wp-block-heading" style="margin-bottom:var(--wp--preset--spacing--40);font-size:1.5rem">More of our work</h2>
+		<!-- /wp:heading -->
+
+		<!-- wp:bcms/project-grid {"count":3,"columns":3,"showFilter":false,"showSummary":false,"align":"wide","ctaText":"View the full portfolio"} /-->
+
+	</div>
+	<!-- /wp:group -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"div","area":"footer"} /-->
