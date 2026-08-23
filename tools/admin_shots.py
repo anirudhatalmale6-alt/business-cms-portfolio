@@ -8,7 +8,10 @@ from playwright.sync_api import sync_playwright
 
 BASE = "http://127.0.0.1:8734"
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "shots")
-USER, PASS = "demoadmin", "Portfolio2026!demo"
+# Local throwaway install only. Override for any other environment:
+#   BCMS_USER=... BCMS_PASS=... python3 tools/admin_shots.py
+USER = os.environ.get("BCMS_USER", "demoadmin")
+PASS = os.environ.get("BCMS_PASS", "")
 
 
 def main() -> int:
