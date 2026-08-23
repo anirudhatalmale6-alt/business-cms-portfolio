@@ -125,7 +125,15 @@ body {
 	border-bottom-color: currentColor;
 }
 
+/* Section intros sit on the same left edge as the grid beneath them. A
+   constrained layout would centre them instead, which reads as a stray indent
+   once there is a full-width grid directly below. */
+.meridian-intro {
+	max-width: 52rem;
+}
+
 .meridian-lede {
+	max-width: 52rem;
 	color: var( --wp--preset--color--slate );
 	font-size: clamp( 1.0625rem, 1.6vw, 1.25rem );
 	line-height: 1.65;
@@ -169,6 +177,74 @@ body {
 	font-size: 1.125rem;
 	line-height: 1.65;
 	color: var( --wp--preset--color--slate );
+}
+
+/* --------------------------------------------------------------------------
+ * Services page
+ * ----------------------------------------------------------------------- */
+
+.meridian-service-list > .meridian-service {
+	padding: var( --wp--preset--spacing--40 ) 0;
+	border-top: 1px solid var( --wp--preset--color--line );
+}
+
+.meridian-service-list > .meridian-service:last-child {
+	border-bottom: 1px solid var( --wp--preset--color--line );
+}
+
+.meridian-service-number {
+	margin: 0;
+	color: var( --wp--preset--color--accent );
+	font-family: var( --wp--preset--font-family--heading );
+	font-size: 1.5rem;
+	font-variant-numeric: tabular-nums;
+	line-height: 1.2;
+}
+
+/* Stacked on narrow screens the number reads as a stray figure, so it sits
+   inline with the service name instead. */
+@media ( max-width: 781px ) {
+	.meridian-service-number {
+		font-size: 1rem;
+		letter-spacing: .1em;
+	}
+
+	.meridian-service-list .wp-block-columns {
+		gap: 0.5rem;
+	}
+}
+
+/* --------------------------------------------------------------------------
+ * Clients page
+ * ----------------------------------------------------------------------- */
+
+.meridian-client-groups > .wp-block-columns {
+	margin-bottom: 0;
+	padding: var( --wp--preset--spacing--40 ) 0;
+	border-top: 1px solid var( --wp--preset--color--line );
+}
+
+.meridian-client-groups > .wp-block-columns:last-child {
+	border-bottom: 1px solid var( --wp--preset--color--line );
+}
+
+.meridian-client-sector {
+	margin: 0;
+	font-family: var( --wp--preset--font-family--body );
+	font-size: .6875rem;
+	font-weight: 600;
+	letter-spacing: .14em;
+	line-height: 1.9;
+	text-transform: uppercase;
+	color: var( --wp--preset--color--slate );
+}
+
+.meridian-client-names {
+	margin: 0;
+	font-family: var( --wp--preset--font-family--heading );
+	font-size: clamp( 1.0625rem, 1.6vw, 1.25rem );
+	line-height: 1.7;
+	color: var( --wp--preset--color--ink );
 }
 
 /* --------------------------------------------------------------------------

@@ -10,8 +10,8 @@
 <!-- wp:group {"align":"full","layout":{"type":"constrained","wideSize":"78rem"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|60"}}}} -->
 <div class="wp-block-group alignfull" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--60)">
 
-	<!-- wp:group {"align":"wide","layout":{"type":"constrained","contentSize":"52rem"}} -->
-	<div class="wp-block-group alignwide">
+	<!-- wp:group {"align":"wide","className":"meridian-intro","layout":{"type":"default"}} -->
+	<div class="wp-block-group alignwide meridian-intro">
 
 		<!-- wp:paragraph {"className":"meridian-eyebrow"} -->
 		<p class="meridian-eyebrow">Strategy · Delivery · Measurable outcomes</p>
@@ -28,7 +28,7 @@
 		<!-- wp:buttons {"style":{"spacing":{"blockGap":"var:preset|spacing|20"}}} -->
 		<div class="wp-block-buttons">
 			<!-- wp:button -->
-			<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/work/">See selected work</a></div>
+			<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/projects/">See selected work</a></div>
 			<!-- /wp:button -->
 			<!-- wp:button {"className":"is-style-outline","style":{"color":{"text":"var:preset|color|ink"}}} -->
 			<div class="wp-block-button is-style-outline"><a class="wp-block-button__link has-text-color wp-element-button" style="color:var(--wp--preset--color--ink)" href="/contact/">Start a conversation</a></div>

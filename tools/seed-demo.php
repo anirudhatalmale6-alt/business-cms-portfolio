@@ -16,6 +16,21 @@ defined( 'ABSPATH' ) || exit;
 
 $bcms_clean = in_array( '--clean', (array) ( $args ?? array() ), true );
 
+/*
+ * The portfolio slug has to be settled before anything asks for a permalink:
+ * the post type was registered on `init` with whatever the option said then, so
+ * changing the option later would silently leave every generated link on the
+ * old URL. Set it, then re-register.
+ */
+$bcms_settings = get_option( BCMS_Settings::OPTION, array() );
+if ( ( $bcms_settings['project_slug'] ?? '' ) !== 'projects' ) {
+	$bcms_settings['project_slug'] = 'projects';
+	update_option( BCMS_Settings::OPTION, $bcms_settings );
+	BCMS_Settings::bust_cache();
+	( new BCMS_Post_Types() )->register();
+	flush_rewrite_rules();
+}
+
 /* -------------------------------------------------------------------------
  * Taxonomy terms
  * ---------------------------------------------------------------------- */
@@ -371,6 +386,23 @@ foreach ( $projects as $project ) {
  * Pages
  * ---------------------------------------------------------------------- */
 
+/**
+ * Returns a registered pattern's block markup so a page can be seeded with the
+ * real blocks rather than a `core/pattern` wrapper. The difference matters:
+ * a wrapper renders but cannot be edited, and the whole point of these pages is
+ * that the client edits them.
+ */
+function bcms_seed_pattern( string $slug ): string {
+	$registry = WP_Block_Patterns_Registry::get_instance();
+
+	if ( ! $registry->is_registered( $slug ) ) {
+		WP_CLI::warning( "Pattern not registered: {$slug}" );
+		return '';
+	}
+
+	return (string) $registry->get_registered( $slug )['content'];
+}
+
 $pages = array(
 	'home'     => array(
 		'title'    => 'Home',
@@ -401,6 +433,17 @@ $pages = array(
 				"<!-- wp:paragraph -->\n<p>We reply to every enquiry within one working day.</p>\n<!-- /wp:paragraph -->",
 			)
 		),
+	),
+	'services' => array(
+		'title'    => 'Services',
+		'template' => 'page-wide',
+		'content'  => bcms_seed_pattern( 'meridian/services-detail' ) . "\n\n"
+			. "<!-- wp:pattern {\"slug\":\"meridian/cta\"} /-->",
+	),
+	'clients'  => array(
+		'title'    => 'Clients',
+		'template' => 'page-wide',
+		'content'  => bcms_seed_pattern( 'meridian/clients' ),
 	),
 	'privacy-policy' => array(
 		'title'    => 'Privacy',
@@ -446,12 +489,25 @@ update_option( 'page_on_front', $page_ids['home'] ?? 0 );
  * Navigation
  * ---------------------------------------------------------------------- */
 
+$nav_items = array(
+	'Home'     => home_url( '/' ),
+	'About'    => (string) get_permalink( $page_ids['about'] ?? 0 ),
+	'Projects' => (string) get_post_type_archive_link( BCMS_Post_Types::PROJECT ),
+	'Services' => (string) get_permalink( $page_ids['services'] ?? 0 ),
+	'Clients'  => (string) get_permalink( $page_ids['clients'] ?? 0 ),
+	'Contact'  => (string) get_permalink( $page_ids['contact'] ?? 0 ),
+);
+
 $nav_markup = implode(
 	"\n",
-	array(
-		'<!-- wp:navigation-link {"label":"Work","url":"' . esc_url( (string) get_post_type_archive_link( BCMS_Post_Types::PROJECT ) ) . '","kind":"custom","isTopLevelLink":true} /-->',
-		'<!-- wp:navigation-link {"label":"About","url":"' . esc_url( (string) get_permalink( $page_ids['about'] ?? 0 ) ) . '","kind":"custom","isTopLevelLink":true} /-->',
-		'<!-- wp:navigation-link {"label":"Contact","url":"' . esc_url( (string) get_permalink( $page_ids['contact'] ?? 0 ) ) . '","kind":"custom","isTopLevelLink":true} /-->',
+	array_map(
+		static fn( $label, $url ) => sprintf(
+			'<!-- wp:navigation-link {"label":"%s","url":"%s","kind":"custom","isTopLevelLink":true} /-->',
+			esc_attr( $label ),
+			esc_url( $url )
+		),
+		array_keys( $nav_items ),
+		array_values( $nav_items )
 	)
 );
 
@@ -484,6 +540,7 @@ $settings['company_tagline'] = 'Strategy, delivery and measurable outcomes for o
 $settings['contact_email']   = 'hello@example.com';
 $settings['contact_phone']   = '+44 20 7000 0000';
 $settings['contact_address'] = "12 Ludgate Square\nLondon EC4M 7DR";
+$settings['project_slug']    = 'projects';
 $settings['linkedin_url']    = 'https://www.linkedin.com/';
 update_option( BCMS_Settings::OPTION, $settings );
 

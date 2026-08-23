@@ -38,7 +38,7 @@ def main() -> int:
         )
 
         # ---- Industry filter swaps the grid without a page load -----------
-        page.goto(BASE + "/work/", wait_until="networkidle")
+        page.goto(BASE + "/projects/", wait_until="networkidle")
         before = page.locator(".bcms-card").count()
         page.click('[data-bcms-filter="healthcare"]')
         page.wait_for_timeout(1200)

@@ -15,18 +15,23 @@ SHOTS = [
     ("02-home-work", "/", 1080),
     ("03-home-capabilities", "/", 2100),
     ("04-home-proof", "/", 2900),
-    ("05-work-archive", "/work/", 0),
-    ("06-work-archive-scrolled", "/work/", 640),
-    ("07-case-study", "/work/ardent-capital-reporting/", 0),
-    ("08-case-study-body", "/work/ardent-capital-reporting/", 900),
+    ("05-work-archive", "/projects/", 0),
+    ("06-work-archive-scrolled", "/projects/", 640),
+    ("07-case-study", "/projects/ardent-capital-reporting/", 0),
+    ("08-case-study-body", "/projects/ardent-capital-reporting/", 900),
     ("09-industry-filter", "/industry/healthcare/", 0),
     ("10-contact", "/contact/", 0),
+    ("14-services", "/services/", 0),
+    ("15-services-list", "/services/", 700),
+    ("16-clients", "/clients/", 0),
+    ("17-clients-quotes", "/clients/", 900),
+    ("18-service-archive", "/service/data-platform/", 0),
 ]
 
 MOBILE = [
     ("m1-home", "/", 0),
-    ("m2-work", "/work/", 300),
-    ("m3-case", "/work/ardent-capital-reporting/", 0),
+    ("m2-work", "/projects/", 300),
+    ("m3-case", "/projects/ardent-capital-reporting/", 0),
 ]
 
 

@@ -49,6 +49,7 @@ class BCMS_Blocks {
 					'count'        => array( 'type' => 'number', 'default' => 6 ),
 					'columns'      => array( 'type' => 'number', 'default' => 3 ),
 					'industry'     => array( 'type' => 'string', 'default' => '' ),
+					'service'      => array( 'type' => 'string', 'default' => '' ),
 					'showFilter'   => array( 'type' => 'boolean', 'default' => true ),
 					'featuredOnly' => array( 'type' => 'boolean', 'default' => false ),
 					'showSummary'  => array( 'type' => 'boolean', 'default' => true ),
@@ -190,10 +191,14 @@ class BCMS_Blocks {
 		// Only pages that actually render a grid pay for the script.
 		wp_enqueue_script( 'bcms-front' );
 
-		// On an industry archive the grid should show that industry without the
-		// editor having to hard-code it into a second copy of the template.
+		// On a term archive the grid should scope itself to that term, so one
+		// template serves every industry and every service rather than needing
+		// a hand-written copy per term.
 		if ( '' === (string) $attributes['industry'] ) {
-			$attributes['industry'] = self::current_industry();
+			$attributes['industry'] = self::current_term( BCMS_Post_Types::INDUSTRY );
+		}
+		if ( '' === (string) ( $attributes['service'] ?? '' ) ) {
+			$attributes['service'] = self::current_term( BCMS_Post_Types::SERVICE );
 		}
 
 		$columns  = max( 1, min( 4, (int) $attributes['columns'] ) );
@@ -229,12 +234,16 @@ class BCMS_Blocks {
 		return $out;
 	}
 
-	public static function current_industry(): string {
-		if ( ! is_tax( BCMS_Post_Types::INDUSTRY ) ) {
+	public static function current_term( string $taxonomy ): string {
+		if ( ! is_tax( $taxonomy ) ) {
 			return '';
 		}
 		$term = get_queried_object();
 		return $term instanceof WP_Term ? $term->slug : '';
+	}
+
+	public static function current_industry(): string {
+		return self::current_term( BCMS_Post_Types::INDUSTRY );
 	}
 
 	private function filter_bar( string $active ): string {
@@ -293,14 +302,25 @@ class BCMS_Blocks {
 			'orderby'             => array( 'menu_order' => 'ASC', 'date' => 'DESC' ),
 		);
 
-		if ( ! empty( $attributes['industry'] ) ) {
-			$args['tax_query'] = array(
-				array(
-					'taxonomy' => BCMS_Post_Types::INDUSTRY,
-					'field'    => 'slug',
-					'terms'    => sanitize_title( (string) $attributes['industry'] ),
-				),
+		$tax_query = array();
+
+		foreach ( array(
+			BCMS_Post_Types::INDUSTRY => 'industry',
+			BCMS_Post_Types::SERVICE  => 'service',
+		) as $taxonomy => $key ) {
+			if ( empty( $attributes[ $key ] ) ) {
+				continue;
+			}
+			$tax_query[] = array(
+				'taxonomy' => $taxonomy,
+				'field'    => 'slug',
+				'terms'    => sanitize_title( (string) $attributes[ $key ] ),
 			);
+		}
+
+		if ( $tax_query ) {
+			$tax_query['relation'] = 'AND';
+			$args['tax_query']     = $tax_query;
 		}
 
 		if ( ! empty( $attributes['featuredOnly'] ) ) {
