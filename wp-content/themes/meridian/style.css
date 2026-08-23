@@ -1,0 +1,319 @@
+/*
+Theme Name: Meridian
+Theme URI: https://github.com/anirudhatalmale6-alt/business-cms-portfolio
+Author: Anirudha Talmale
+Description: A corporate block theme built for portfolio-led business sites. Restrained palette, editorial serif headings, generous grids, and no page-builder dependency — every layout is a native block template you can edit in the Site Editor.
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.7
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: meridian
+Tags: portfolio, business, block-theme, full-site-editing, one-column, custom-colors, custom-logo, editor-style, accessibility-ready
+*/
+
+/* Block themes take their styling from theme.json. This file carries only the
+   handful of rules that theme.json has no vocabulary for. */
+
+/* --------------------------------------------------------------------------
+ * Base
+ * ----------------------------------------------------------------------- */
+
+html {
+	scroll-behavior: smooth;
+}
+
+@media ( prefers-reduced-motion: reduce ) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+/* A visible focus ring is the difference between a keyboard-usable site and a
+   guessing game. */
+:where( a, button, input, textarea, select, summary, [tabindex] ):focus-visible {
+	outline: 2px solid var( --wp--preset--color--accent );
+	outline-offset: 3px;
+}
+
+.skip-link {
+	position: absolute;
+	top: -100px;
+	left: 1rem;
+	z-index: 999;
+	padding: .75rem 1.25rem;
+	background: var( --wp--preset--color--ink );
+	color: #fff;
+	font-size: .875rem;
+	text-decoration: none;
+	border-radius: 0 0 3px 3px;
+}
+
+.skip-link:focus {
+	top: 0;
+}
+
+/* --------------------------------------------------------------------------
+ * Header
+ * ----------------------------------------------------------------------- */
+
+.meridian-header {
+	border-bottom: 1px solid var( --wp--preset--color--line );
+	background: rgba( 255, 255, 255, .92 );
+	backdrop-filter: saturate( 180% ) blur( 12px );
+	position: sticky;
+	top: 0;
+	z-index: 40;
+}
+
+.admin-bar .meridian-header {
+	top: 32px;
+}
+
+@media ( max-width: 782px ) {
+	.admin-bar .meridian-header {
+		top: 46px;
+	}
+}
+
+.meridian-header .wp-block-navigation__responsive-container-open,
+.meridian-header .wp-block-navigation__responsive-container-close {
+	color: var( --wp--preset--color--ink );
+}
+
+.meridian-header .wp-block-navigation-item__content:hover {
+	color: var( --wp--preset--color--accent );
+}
+
+/* Current section gets a rule under it rather than a colour change, which
+   survives on both the light header and the dark footer. */
+.meridian-header .current-menu-item > .wp-block-navigation-item__content,
+.meridian-header .current_page_item > .wp-block-navigation-item__content {
+	box-shadow: inset 0 -1px 0 0 currentColor;
+}
+
+/* --------------------------------------------------------------------------
+ * Eyebrow / section labels
+ * ----------------------------------------------------------------------- */
+
+.meridian-eyebrow {
+	margin: 0 0 .75rem;
+	color: var( --wp--preset--color--accent );
+	font-family: var( --wp--preset--font-family--body );
+	font-size: .6875rem;
+	font-weight: 600;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+}
+
+/* The eyebrow is often a taxonomy link, which would otherwise inherit the
+   body link colour and underline and stop reading as a label. */
+.meridian-eyebrow a {
+	color: inherit;
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+}
+
+.meridian-eyebrow a:hover {
+	border-bottom-color: currentColor;
+}
+
+/* Section intros sit on the same left edge as the grid beneath them. A
+   constrained layout would centre them instead, which reads as a stray indent
+   once there is a full-width grid directly below. */
+.meridian-intro {
+	max-width: 52rem;
+}
+
+.meridian-lede {
+	max-width: 52rem;
+	color: var( --wp--preset--color--slate );
+	font-size: clamp( 1.0625rem, 1.6vw, 1.25rem );
+	line-height: 1.65;
+}
+
+.meridian-rule-top {
+	border-top: 1px solid var( --wp--preset--color--line );
+}
+
+/* --------------------------------------------------------------------------
+ * Case-study body
+ * ----------------------------------------------------------------------- */
+
+.meridian-case-body > * {
+	max-width: 44rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.meridian-case-body > .alignwide,
+.meridian-case-body > .alignfull,
+.meridian-case-body > .bcms-stats,
+.meridian-case-body > figure.wp-block-image.alignwide {
+	max-width: none;
+}
+
+.meridian-case-body h2 {
+	margin-top: 2.75rem;
+}
+
+.meridian-case-body h3 {
+	margin-top: 2rem;
+}
+
+.meridian-case-body p + p {
+	margin-top: 1.25rem;
+}
+
+/* First paragraph of a case study reads as a standfirst. */
+.meridian-case-body > p:first-of-type {
+	font-size: 1.125rem;
+	line-height: 1.65;
+	color: var( --wp--preset--color--slate );
+}
+
+/* --------------------------------------------------------------------------
+ * Services page
+ * ----------------------------------------------------------------------- */
+
+.meridian-service-list > .meridian-service {
+	padding: var( --wp--preset--spacing--40 ) 0;
+	border-top: 1px solid var( --wp--preset--color--line );
+}
+
+.meridian-service-list > .meridian-service:last-child {
+	border-bottom: 1px solid var( --wp--preset--color--line );
+}
+
+.meridian-service-number {
+	margin: 0;
+	color: var( --wp--preset--color--accent );
+	font-family: var( --wp--preset--font-family--heading );
+	font-size: 1.5rem;
+	font-variant-numeric: tabular-nums;
+	line-height: 1.2;
+}
+
+/* Stacked on narrow screens the number reads as a stray figure, so it sits
+   inline with the service name instead. */
+@media ( max-width: 781px ) {
+	.meridian-service-number {
+		font-size: 1rem;
+		letter-spacing: .1em;
+	}
+
+	.meridian-service-list .wp-block-columns {
+		gap: 0.5rem;
+	}
+}
+
+/* --------------------------------------------------------------------------
+ * Clients page
+ * ----------------------------------------------------------------------- */
+
+.meridian-client-groups > .wp-block-columns {
+	margin-bottom: 0;
+	padding: var( --wp--preset--spacing--40 ) 0;
+	border-top: 1px solid var( --wp--preset--color--line );
+}
+
+.meridian-client-groups > .wp-block-columns:last-child {
+	border-bottom: 1px solid var( --wp--preset--color--line );
+}
+
+.meridian-client-sector {
+	margin: 0;
+	font-family: var( --wp--preset--font-family--body );
+	font-size: .6875rem;
+	font-weight: 600;
+	letter-spacing: .14em;
+	line-height: 1.9;
+	text-transform: uppercase;
+	color: var( --wp--preset--color--slate );
+}
+
+.meridian-client-names {
+	margin: 0;
+	font-family: var( --wp--preset--font-family--heading );
+	font-size: clamp( 1.0625rem, 1.6vw, 1.25rem );
+	line-height: 1.7;
+	color: var( --wp--preset--color--ink );
+}
+
+/* --------------------------------------------------------------------------
+ * Footer
+ * ----------------------------------------------------------------------- */
+
+.meridian-footer a {
+	color: inherit;
+	text-decoration: none;
+	opacity: .78;
+	transition: opacity 180ms ease;
+}
+
+.meridian-footer a:hover {
+	opacity: 1;
+	text-decoration: underline;
+}
+
+.meridian-footer .wp-block-heading {
+	color: inherit;
+}
+
+/* --------------------------------------------------------------------------
+ * Utility
+ * ----------------------------------------------------------------------- */
+
+.meridian-hairline {
+	height: 1px;
+	background: var( --wp--preset--color--line );
+	border: 0;
+}
+
+.screen-reader-text {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect( 0, 0, 0, 0 );
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Images inside the editor and on the front end should never blow out a
+   narrow column. */
+img,
+video {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Print: a case study printed for a board pack should be readable, not a
+   screenshot of a website. */
+@media print {
+	.meridian-header,
+	.meridian-footer,
+	.bcms-filter,
+	.bcms-form-block {
+		display: none !important;
+	}
+
+	body {
+		font-size: 11pt;
+	}
+
+	a[ href^='http' ]::after {
+		content: ' (' attr( href ) ')';
+		font-size: 9pt;
+		color: #555;
+	}
+}
